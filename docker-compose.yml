@@ -1,0 +1,39 @@
+version: "3.9"
+
+services:
+  back:
+    container_name: course_back
+    build:
+      context: ./back
+    restart: always
+    expose:
+      - 8000
+    env_file:
+      - back/.env
+    depends_on:
+      db:
+        condition: service_healthy
+  db:
+    container_name: course_db
+    image: postgres:14-alpine
+    expose:
+      - 5432
+    env_file:
+      - back/.env
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  front:
+    container_name: course_front
+    build:
+      context: ./front
+    expose:
+      - 3000
+    ports:
+      - "3000:3000"
+    env_file:
+      - front/.env
+    depends_on:
+      - back

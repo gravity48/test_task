@@ -1,0 +1,15 @@
+fastapi
+SqlAlchemy
+asyncpg
+alembic
+psycopg2-binary
+apscheduler
+aiohttp
+uvicorn
+
+httpx
+python-dotenv
+black
+add-trailing-comma
+isort
+flake8
